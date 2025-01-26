@@ -9,8 +9,14 @@ First, create a new file named `.env.local` key, [OpenAI API](https://platform.o
 The first time you are running this project, you will need to install the dependencies. Run this command in your terminal:
 
 ```bash
-npm i or npm installl
+npm i 
 ```
+or
+
+```bash
+npm install
+```
+
 
 To start the app, run:
 
