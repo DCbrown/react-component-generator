@@ -122,9 +122,9 @@ export default function Home() {
           <h1 className="text-4xl font-bold mb-4">Speech-to-React Component</h1>
           <p className="text-gray-400 mb-4">
             Describe the React component you want to create using your voice.
-            Try saying something like "Create a button that changes color when
-            clicked" or "Make a counter component with increment and decrement
-            buttons"
+            Try saying something like &ldquo;Create a button that changes color
+            when clicked&rdquo; or &ldquo;Make a counter component with
+            increment and decrement buttons&rdquo;
           </p>
         </div>
         <div className="flex flex-col items-center mb-8">

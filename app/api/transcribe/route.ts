@@ -22,14 +22,6 @@ export async function POST(request: Request) {
     const arrayBuffer = await audioFile.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // Create a readable stream from the buffer
-    const stream = new ReadableStream({
-      start(controller) {
-        controller.enqueue(buffer);
-        controller.close();
-      },
-    });
-
     const response = await openai.audio.transcriptions.create({
       file: new File([buffer], "audio.webm", { type: "audio/webm" }),
       model: "whisper-1",
