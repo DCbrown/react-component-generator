@@ -97,9 +97,13 @@ export default function Home() {
 
           setComponentHistory((prev) => [newLog, ...prev]);
           setCode(codeData.generatedCode);
-        } catch (error) {
+        } catch (error: unknown) {
           console.error("Error:", error);
-          setError(error.message);
+          if (error instanceof Error) {
+            setError(error.message);
+          } else {
+            setError("An unknown error occurred");
+          }
           setCode("");
         } finally {
           setIsGenerating(false);
@@ -107,9 +111,14 @@ export default function Home() {
       };
 
       mediaRecorder.start();
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error:", error);
-      setError(error.message);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+      setCode("");
       setIsRecording(false);
       setIsGenerating(false);
     }
