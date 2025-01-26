@@ -16,9 +16,9 @@ export default function Home() {
   const [isRecording, setIsRecording] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState("");
-  const mediaRecorderRef = useRef(null);
-  const chunksRef = useRef([]);
-  const streamRef = useRef(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const chunksRef = useRef<Blob[]>([]);
+  const streamRef = useRef<MediaStream | null>(null);
 
   async function handleSpeech() {
     if (isRecording) {
@@ -29,7 +29,7 @@ export default function Home() {
         mediaRecorderRef.current.state === "recording"
       ) {
         mediaRecorderRef.current.stop();
-        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current?.getTracks().forEach((track) => track.stop());
       }
       setIsRecording(false);
       return;
