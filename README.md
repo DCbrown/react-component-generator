@@ -1,4 +1,4 @@
-# Ai Interviewer
+# Ai React Component Generator
 
 ## Getting Started
 
