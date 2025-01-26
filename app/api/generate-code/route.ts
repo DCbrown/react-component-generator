@@ -77,9 +77,12 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ generatedCode });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
     return NextResponse.json(
-      { error: error?.message || "An error occurred" },
+      { error: "An unknown error occurred" },
       { status: 500 }
     );
   }
