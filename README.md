@@ -1,4 +1,4 @@
-# Ai Interviewer
+# Ai React Component Generator
 
 ## Getting Started
 
@@ -9,11 +9,17 @@ First, create a new file named `.env.local` key, [OpenAI API](https://platform.o
 The first time you are running this project, you will need to install the dependencies. Run this command in your terminal:
 
 ```bash
-yarn
+npm i 
 ```
+or
+
+```bash
+npm install
+```
+
 
 To start the app, run:
 
 ```bash
-yarn dev
+npm run dev
 ```
