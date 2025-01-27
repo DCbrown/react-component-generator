@@ -18,12 +18,17 @@ export async function POST(request: Request) {
     - Use solid colors and shadows for depth
     - Include loading states and feedback for interactive elements
     - Do not use gradients or animations
+    - For any images, use placehold.co with format: https://placehold.co/600x400/dark-hex/white-hex/png
     - Return ONLY the component code, no explanations or comments
+    - Do not include any text like "Here is your component" or similar phrases
 
     Example format:
     function render() {
       function MyComponent() {
-        const [state, setState] = React.useState(initialValue);
+        const [state, setState] = React.useState({
+          title: "Image Card",
+          imageUrl: "https://placehold.co/600x400/234/fff/png"
+        });
         
         return (
           <div className="bg-slate-800 rounded-xl shadow-xl p-6">
@@ -32,6 +37,11 @@ export async function POST(request: Request) {
                 <h2 className="text-2xl font-bold text-white mb-4">
                   {state.title}
                 </h2>
+                <img 
+                  src={state.imageUrl}
+                  alt="Placeholder"
+                  className="w-full h-auto rounded-lg mb-4"
+                />
                 <div className="space-y-4">
                   <button 
                     className="w-full py-3 px-6 text-lg font-semibold rounded-lg

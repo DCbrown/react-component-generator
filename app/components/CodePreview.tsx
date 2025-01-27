@@ -11,7 +11,7 @@ export default function CodePreview({ code }: CodePreviewProps) {
       <div className="bg-gray-800 p-5 rounded-lg w-full">
         <div className="mb-4">
           <h3 className="text-lg font-bold mb-2">Preview</h3>
-          <div className="bg-white text-black p-4 rounded">
+          <div className="text-black p-4 rounded">
             <LivePreview />
           </div>
           <LiveError className="text-red-500 mt-2" />

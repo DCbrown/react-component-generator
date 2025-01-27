@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import CodePreview from "./components/CodePreview";
+import { Mic, Square, Hourglass, Play, History } from "lucide-react";
 
 interface ComponentLog {
   id: string;
@@ -125,77 +126,87 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-10">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">Speech-to-React Component</h1>
-          <p className="text-gray-400 mb-4">
+    <div className="min-h-screen bg-slate-900 text-white p-8">
+      <div className="max-w-7xl mx-auto space-y-8">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            Speech-to-React Component
+          </h1>
+          <p className="text-slate-400 mt-4 max-w-2xl mx-auto">
             Describe the React component you want to create using your voice.
             Try saying something like &ldquo;Create a button that changes color
             when clicked&rdquo; or &ldquo;Make a counter component with
             increment and decrement buttons&rdquo;
           </p>
         </div>
-        <div className="flex flex-col items-center mb-8">
+
+        <div className="flex justify-center mb-8">
           {error && (
-            <div className="mb-4 p-4 bg-red-500 rounded-lg">{error}</div>
+            <div className="mb-4 p-4 bg-red-500/10 border border-red-500 rounded-lg text-red-400">
+              {error}
+            </div>
           )}
           <button
             onClick={handleSpeech}
-            className={`px-6 py-3 text-lg font-bold rounded-lg ${
+            className={`px-6 py-3 text-lg font-semibold rounded-lg flex items-center gap-2 ${
               isGenerating
-                ? "bg-gray-500 cursor-not-allowed"
+                ? "bg-slate-700 cursor-not-allowed"
                 : isRecording
-                ? "bg-red-500 hover:bg-red-600"
-                : "bg-blue-500 hover:bg-blue-600"
+                ? "bg-red-500/80 hover:bg-red-500"
+                : "bg-blue-500/80 hover:bg-blue-500"
             }`}
             disabled={isGenerating}
           >
+            {isGenerating ? (
+              <Hourglass className="w-5 h-5 animate-spin" />
+            ) : isRecording ? (
+              <Square className="w-5 h-5" />
+            ) : (
+              <Mic className="w-5 h-5" />
+            )}
             {isGenerating
-              ? "⏳ Generating Code..."
+              ? "Generating Code..."
               : isRecording
-              ? "⏹️ Stop Recording"
-              : "🎤 Start Speaking"}
+              ? "Stop Recording"
+              : "Start Speaking"}
           </button>
-          {isGenerating && (
-            <div className="mt-4 text-yellow-400 animate-pulse">
-              🤖 AI is processing your speech and generating code... one sec
-            </div>
-          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div>
-            {code && (
-              <div className="w-full">
-                <CodePreview code={code} />
-                <div className="flex justify-center mt-4">
-                  <button
-                    onClick={() => navigator.clipboard.writeText(code)}
-                    className="px-6 py-3 rounded-lg bg-green-500 hover:bg-green-600"
-                  >
-                    📋 Copy Code
-                  </button>
-                </div>
+          <div className="bg-slate-800/50 rounded-xl p-6 backdrop-blur-sm">
+            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <Play className="w-5 h-5" />
+              Preview
+            </h2>
+            {code ? (
+              <CodePreview code={code} />
+            ) : (
+              <div className="text-slate-500 text-center py-12">
+                Component preview will appear here
               </div>
             )}
           </div>
 
-          <div className="bg-gray-800 rounded-lg p-6">
-            <h2 className="text-xl font-bold mb-4">Component History</h2>
-            <div className="space-y-4 max-h-[600px] overflow-y-auto">
+          <div className="bg-slate-800/50 rounded-xl p-6 backdrop-blur-sm">
+            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <History className="w-5 h-5" />
+              Component History
+            </h2>
+            <div className="space-y-3 max-h-[600px] overflow-y-auto">
               {componentHistory.map((log) => (
                 <div
                   key={log.id}
-                  className="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors cursor-pointer"
+                  className="bg-slate-700/50 rounded-lg p-4 hover:bg-slate-700 transition-colors cursor-pointer"
                   onClick={() => setCode(log.code)}
                 >
-                  <div className="text-sm text-gray-400">{log.timestamp}</div>
-                  <div className="font-medium">{log.description}</div>
+                  <div className="text-sm text-slate-400">{log.timestamp}</div>
+                  <div className="font-medium text-slate-200">
+                    {log.description}
+                  </div>
                 </div>
               ))}
               {componentHistory.length === 0 && (
-                <div className="text-gray-500 text-center py-4">
+                <div className="text-slate-500 text-center py-8">
                   No components generated yet
                 </div>
               )}
