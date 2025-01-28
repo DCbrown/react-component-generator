@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import CodePreview from "./components/CodePreview";
 import { Mic, Square, Hourglass, Play, History } from "lucide-react";
+import Toast from "./components/Toast";
 
 interface ComponentLog {
   id: string;
@@ -20,6 +21,7 @@ export default function Home() {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
+  const [showToast, setShowToast] = useState(false);
 
   async function handleSpeech() {
     if (isRecording) {
@@ -196,10 +198,46 @@ export default function Home() {
               {componentHistory.map((log) => (
                 <div
                   key={log.id}
-                  className="bg-slate-700/50 rounded-lg p-4 hover:bg-slate-700 transition-colors cursor-pointer"
                   onClick={() => setCode(log.code)}
+                  className="bg-slate-700/50 rounded-lg p-4 hover:bg-slate-700/80 transition-colors cursor-pointer"
                 >
-                  <div className="text-sm text-slate-400">{log.timestamp}</div>
+                  <div className="flex justify-between items-start mb-2">
+                    <div className="text-sm text-slate-400">
+                      {log.timestamp}
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent triggering the parent onClick
+                        navigator.clipboard.writeText(log.code);
+                        setShowToast(true);
+                      }}
+                      className="text-xs px-2 py-1 bg-blue-500/20 hover:bg-blue-500/30 
+                                 text-blue-300 rounded flex items-center gap-1 transition-colors"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <rect
+                          width="14"
+                          height="14"
+                          x="8"
+                          y="8"
+                          rx="2"
+                          ry="2"
+                        />
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                      </svg>
+                      Copy Code
+                    </button>
+                  </div>
                   <div className="font-medium text-slate-200">
                     {log.description}
                   </div>
@@ -214,6 +252,11 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Toast
+        message="Code copied to clipboard!"
+        isVisible={showToast}
+        onHide={() => setShowToast(false)}
+      />
     </div>
   );
 }
